@@ -1,5 +1,6 @@
 package com.example.melodypalmer.services;
 
+import com.example.melodypalmer.models.Fruta;
 import com.example.melodypalmer.models.Product;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -29,28 +30,28 @@ public class CartService {
     }
 
 
-    public double clasifyItems(List<String> list) {
+    public double clasifyItems(List<Fruta> list) {
 
         List<String> apples = new ArrayList<>();
         List<String> oranges = new ArrayList<>();
 
         double price = 0;
-        for (String s : list) {
+        for (Fruta s : list) {
 
-            if (!ALLOW_LIST.matcher(s).matches()) {
+            if (!ALLOW_LIST.matcher(s.getNombre()).matches()) {
                 throw new ResponseStatusException(HttpStatus.I_AM_A_TEAPOT, "Invalid Character");
             }
 
-            if(BLOCK_LIST.matcher(s).matches()){
+            if(BLOCK_LIST.matcher(s.getNombre()).matches()){
                 throw new IllegalArgumentException("Invalid fruit name");
             }
 
-            if (s.equalsIgnoreCase("Apple")) {
+            if (s.getNombre().equalsIgnoreCase("Apple")) {
                 apples.add("apple");
                 if (apples.size() % 2 != 0) {
                     price += 0.60;
                 }
-            } else if (s.equalsIgnoreCase("Orange")) {
+            } else if (s.getNombre().equalsIgnoreCase("Orange")) {
                 oranges.add("orange");
                 if (oranges.size() % 3 != 0) {
                     price += 0.25;
