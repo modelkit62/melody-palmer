@@ -16,14 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.util.ArrayList;
@@ -35,7 +31,8 @@ import java.util.List;
 @SpringBootTest(classes = CartController.class)
 public class CartControllerTests {
 
-    public static final String EXPECTED = "1.70";
+    public static final String EXPECTED_RESPONSE = "1.70";
+    public static final int EXPECTED_HTTP_STATUS = 200;
     @Autowired
     private MockMvc mockMvc;
 
@@ -96,7 +93,8 @@ public class CartControllerTests {
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 
-        assertEquals(EXPECTED, resultActions.andReturn().getResponse().getContentAsString());
+        assertEquals(EXPECTED_HTTP_STATUS, resultActions.andReturn().getResponse().getStatus());
+        assertEquals(EXPECTED_RESPONSE, resultActions.andReturn().getResponse().getContentAsString());
     }
 
 }
