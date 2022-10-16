@@ -43,7 +43,7 @@ public class CartController {
         // List<String> list = Arrays.asList(frutas);
 
         double finalPrice = cartService.clasifyItems(frutas);
-        return new ResponseEntity<>(String.format("%,.2f", "finalPrice"), HttpStatus.OK);
+        return new ResponseEntity<>(String.format("%,.2f", finalPrice), HttpStatus.OK);
         // throw new RuntimeException("Not implemented");
     }
 
